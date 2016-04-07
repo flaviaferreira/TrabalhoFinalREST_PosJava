@@ -1,0 +1,60 @@
+<div ng-controller="PedidoController">
+	<br>
+	<div class="container-fluid">
+		<div class="col-md-12">
+			<div class="panel panel-primary">
+				<div class="panel-heading">PEDIDO</div>
+				<div class="panel-body">
+					<div class="col-md-offset-1 col-md-3">
+						<input class="form-control" ng-model="pedido.cliente"
+							ng-keyup="listar()" type="text" placeholder="Cliente">
+					</div>
+					<div class="col-md-3">
+						<input class="form-control" ng-model="pedido.produto"
+							ng-keyup="listar()" type="text" placeholder="Produto">
+					</div>
+					<div class="col-md-3">
+						<input class="form-control" ng-model="pedido.quantidade"
+							ng-keyup="listar()" type="text" placeholder="Quantidade">
+					</div>
+					<div class="col-md-1">
+						<div class="form-group">
+							<button type="button"
+								class="btn btn-success form-control pull-right"
+								title="Adicionar pedido" ng-click="adicionarPedido()">
+								<span class="glyphicon glyphicon-plus"></span>
+							</button>
+						</div>
+					</div>
+					<br> <br>
+					<hr>
+					<div class="table-responsive">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th class="col-md-4" ng-click="ordenar('cliente')"><a>Cliente</a></th>
+									<th class="col-md-4" ng-click="ordenar('produto')"><a>Produto</a></th>
+									<th class="col-md-3" ng-click="ordenar('quantidade')"><a>Quantidade</a></th>
+									<th class="col-md-2">Excluir</th>
+								</tr>
+							</thead>
+							<tbody ng-repeat = "p in pedidos | filter:pedido">
+								<tr>
+									<td class="col-md-4">{{p.cliente}}</td>
+									<td class="col-md-4">{{p.produto}}</td>
+									<td class="col-md-3">{{p.quantidade}}</td>
+									<td class="col-md-2">&nbsp;&nbsp;&nbsp; <a
+										style="color: #D20000" title="Excluir pedido"
+										ng-click="excluirPedido(p.id)"> <span
+											class="glyphicon glyphicon-trash"></span>
+									</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

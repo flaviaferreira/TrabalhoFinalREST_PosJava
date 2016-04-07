@@ -1,0 +1,109 @@
+<div ng-controller="ClienteController">
+	<br>
+	<div class="container-fluid">
+		<div class="col-md-12">
+			<div class="panel panel-primary">
+				<div class="panel-heading">CLIENTE</div>
+				<div class="panel-body">
+					<div class="col-md-offset-1 col-md-9">
+						<input class="form-control" ng-model="nomeCliente"
+							ng-keyup="listar()" type="text" placeholder="Nome do cliente">
+					</div>
+					<div class="col-md-1">
+						<div class="form-group">
+							<button type="button"
+								class="btn btn-success form-control pull-right"
+								title="Adicionar cliente" data-toggle="modal" data-target=".novo">
+								<span class="glyphicon glyphicon-plus"></span>
+							</button>
+						</div>
+					</div>
+					<br> <br>
+					<hr>
+					<div class="table-responsive">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th class="col-md-9" ng-click="ordenar('nome')"><a>Cliente</a></th>
+									<th class="col-md-2">Editar</th>
+									<th class="col-md-2">Excluir</th>
+								</tr>
+							</thead>
+							<tbody ng-repeat="c in listaDeClientes | filter:nomeCliente">
+								<tr>
+									<td class="col-md-9">{{c.nome}}</td>
+									<td class="col-md-2"><a style="color: #FFBC1C"
+										title="Editar cliente" data-toggle="modal" data-target=".edicao"
+										ng-click="selecionaItem(c)">
+											&nbsp;&nbsp;&nbsp; <span class="glyphicon glyphicon-pencil"></span>
+									</a></td>
+									<td class="col-md-2">&nbsp;&nbsp;&nbsp; <a
+										style="color: #D20000" title="Excluir cliente" data-toggle="modal" data-target=".exclusao"
+										ng-click="selecionaItem(c)"> <span
+											class="glyphicon glyphicon-trash"></span>
+									</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade novo" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header" style="background-image:linear-gradient(to bottom,#337ab7 0,#2e6da4 100%)">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel" style="color:white">Adicionar cliente</h4>
+                </div>
+                <div class="modal-body">
+                    <input class="form-control" ng-model="cliente.nome" type="text" placeholder="Nome do cliente">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelar()">Cancelar</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="adicionarCliente()">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+	<div class="modal fade edicao" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header" style="background-image:linear-gradient(to bottom,#337ab7 0,#2e6da4 100%)">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel" style="color:white">Editar cliente</h4>
+                </div>
+                <div class="modal-body">
+                    <input class="form-control" ng-model="cliente.nome" type="text" placeholder="Nome do cliente">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelar()">Cancelar</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="alterarCliente()">Editar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+	<div class="modal fade exclusao" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header" style="background-image:linear-gradient(to bottom,#337ab7 0,#2e6da4 100%)">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel" style="color:white">Atenção!</h4>
+                </div>
+                <div class="modal-body">
+                    Deseja excluir este cliente?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelar()">Cancelar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="excluirCliente()">Excluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
