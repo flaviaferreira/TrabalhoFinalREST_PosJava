@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Transactional
 public class ProdutoService {
-    
+
     @Autowired
     private ProdutoRepository produtoRepo;
 
@@ -57,22 +57,22 @@ public class ProdutoService {
     public boolean existePedidoComEsseProduto(Long id) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", id);
-        
+
         String query = "select p.codigo,"
                 + " p.quantidade,"
                 + " p.cliente_codigo,"
                 + " p.produto_codigo"
                 + " from pedido p"
                 + " where p.produto_codigo = :id";
-         
+
         List<Map<String, Object>> retorno = jdbcTemplate.query(query, params, new MapRowMapper());
-         
+
         System.out.println(retorno);
-         if ((retorno == null) || (retorno.isEmpty())){
-             return false;
-         } else {
-             return true;
-         }
+        if ((retorno == null) || (retorno.isEmpty())){
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }

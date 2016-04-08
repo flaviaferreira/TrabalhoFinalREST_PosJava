@@ -130,5 +130,5 @@ public class ProdutoController {
     public List<Map<String, Object>> listarTodos(@RequestParam String ordenarPor, @RequestParam String ascDesc) {
         return produtoService.listarTodos(ordenarPor, ascDesc);
     }
-
+    
 }

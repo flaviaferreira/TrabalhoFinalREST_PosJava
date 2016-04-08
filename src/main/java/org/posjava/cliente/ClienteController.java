@@ -130,5 +130,5 @@ public class ClienteController {
     public List<Map<String, Object>> listarTodos(@RequestParam String ordenarPor, @RequestParam String ascDesc) {
         return clienteService.listarTodos(ordenarPor, ascDesc);
     }
-	
+
 }

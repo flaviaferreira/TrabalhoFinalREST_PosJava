@@ -1,3 +1,4 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <div ng-controller="PedidoController">
 	<br>
 	<div class="container-fluid">
@@ -5,23 +6,21 @@
 			<div class="panel panel-primary">
 				<div class="panel-heading">PEDIDO</div>
 				<div class="panel-body">
-					<div class="col-md-offset-1 col-md-3">
-						<input class="form-control" ng-model="pedido.cliente"
-							ng-keyup="listar()" type="text" placeholder="Cliente">
+					<div class="col-md-offset-1 col-md-4">
+						<input class="form-control" ng-model="nomeCliente"
+							ng-keyup="listar()" type="text"
+							placeholder="Pesquisar por nome do cliente">
 					</div>
-					<div class="col-md-3">
-						<input class="form-control" ng-model="pedido.produto"
-							ng-keyup="listar()" type="text" placeholder="Produto">
-					</div>
-					<div class="col-md-3">
-						<input class="form-control" ng-model="pedido.quantidade"
-							ng-keyup="listar()" type="text" placeholder="Quantidade">
+					<div class="col-md-4">
+						<input class="form-control" ng-model="nomeProduto"
+							ng-keyup="listar()" type="text"
+							placeholder="Pesquisar por produto">
 					</div>
 					<div class="col-md-1">
 						<div class="form-group">
 							<button type="button"
 								class="btn btn-success form-control pull-right"
-								title="Adicionar pedido" ng-click="adicionarPedido()">
+								title="Adicionar pedido" data-toggle="modal" data-target=".novo">
 								<span class="glyphicon glyphicon-plus"></span>
 							</button>
 						</div>
@@ -32,20 +31,21 @@
 						<table class="table table-hover">
 							<thead>
 								<tr>
-									<th class="col-md-4" ng-click="ordenar('cliente')"><a>Cliente</a></th>
-									<th class="col-md-4" ng-click="ordenar('produto')"><a>Produto</a></th>
-									<th class="col-md-3" ng-click="ordenar('quantidade')"><a>Quantidade</a></th>
-									<th class="col-md-2">Excluir</th>
+									<th class="col-md-4" ng-click="ordenar('nome_cliente')"><a>Cliente</a></th>
+									<th class="col-md-4" ng-click="ordenar('nome_produto')"><a>Produto</a></th>
+									<th class="col-md-3"><a>Quantidade</a></th>
+									<th class="col-md-1">Excluir</th>
 								</tr>
 							</thead>
-							<tbody ng-repeat = "p in pedidos | filter:pedido">
+							<tbody ng-repeat="p in listaDePedidos | filter: nomeCliente | filter: nomeProduto" >
 								<tr>
-									<td class="col-md-4">{{p.cliente}}</td>
-									<td class="col-md-4">{{p.produto}}</td>
+									<td class="col-md-4">{{p.nome_cliente}}</td>
+									<td class="col-md-4">{{p.nome_produto}}</td>
 									<td class="col-md-3">{{p.quantidade}}</td>
-									<td class="col-md-2">&nbsp;&nbsp;&nbsp; <a
+									<td class="col-md-1">&nbsp;&nbsp;&nbsp; <a
 										style="color: #D20000" title="Excluir pedido"
-										ng-click="excluirPedido(p.id)"> <span
+										data-toggle="modal" data-target=".exclusao"
+										ng-click="selecionaItem(p)"> <span
 											class="glyphicon glyphicon-trash"></span>
 									</a>
 									</td>
@@ -57,4 +57,75 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="modal fade novo" tabindex="-1" role="dialog"
+		aria-labelledby="mySmallModalLabel">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header"
+					style="background-image: linear-gradient(to bottom, #337ab7 0, #2e6da4 100%)">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel" style="color: white">Adicionar
+						pedido</h4>
+				</div>
+				<div class="modal-body">
+					<input class="form-control" ng-model="cliente" type="text"
+						placeholder="Cliente"
+						uib-typeahead="c as c.nome for c in buscarCliente($viewValue)"
+						typeahead-loading="carregaCliente"
+						typeahead-no-results="noResults" id="inputCliente" /> 
+						<i ng-show="carregaCliente" class="glyphicon glyphicon-refresh"></i>
+					<div ng-show="noResults">
+						<i class="glyphicon glyphicon-remove"></i> Cliente não cadastrado
+					</div>
+					<br> 
+					<input class="form-control" ng-model="produto" type="text"
+						placeholder="Produto"
+						uib-typeahead="p as p.nome for p in buscarProduto($viewValue)"
+						typeahead-loading="carregaProduto"
+						typeahead-no-results="noResults" id="inputProduto" />
+						<i ng-show="carregaProduto" class="glyphicon glyphicon-refresh"></i>
+					<div ng-show="noResults">
+						<i class="glyphicon glyphicon-remove"></i> Produto não cadastrado
+					</div>
+					<br> 
+					<input class="form-control" ng-model="quantidade" type="number"
+						placeholder="Quantidade">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						ng-click="cancelar()">Cancelar</button>
+					<button type="button" class="btn btn-success" data-dismiss="modal"
+						ng-click="adicionarPedido()">Salvar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade exclusao" tabindex="-1" role="dialog"
+		aria-labelledby="mySmallModalLabel">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header"
+					style="background-image: linear-gradient(to bottom, #337ab7 0, #2e6da4 100%)">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel" style="color: white">Atenção!</h4>
+				</div>
+				<div class="modal-body">Deseja excluir este pedido?</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						ng-click="cancelar()">Cancelar</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal"
+						ng-click="excluirPedido()">Excluir</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </div>

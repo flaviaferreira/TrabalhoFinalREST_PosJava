@@ -18,9 +18,7 @@ app.controller("ProdutoController", ["$scope", "$http", "$rootScope", "$location
 	$scope.ordenar = function (coluna) {
 		$scope.colunaOrdenar = coluna;
 		$scope.ascdescparameter();
-
 		$scope.listar();
-		console.log($scope.colunaOrdenar);
 	};
 
 	$scope.listar = function (ordenar, ascDesc) {
@@ -41,13 +39,12 @@ app.controller("ProdutoController", ["$scope", "$http", "$rootScope", "$location
 		} else {
 			$http.get("/produto/buscaPorNome?pesquisa=" + $scope.nomeProduto + "&ordenarPor=" + ordenar + "&ascDesc=" + ascDesc)
 			.success(function (data) {
-				$scope.listaDeComunidades = data;
+				$scope.listaDeProdutos = data;
 			})
 			.error(function () {
 				toastr.error("Erro ao realizar a pesquisa.");
 			});
 		}
-		console.log($scope.listaDeProdutos);
 	};
 
 	 $scope.selecionaItem = function(p){

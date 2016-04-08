@@ -18,9 +18,7 @@ app.controller("ClienteController", ["$scope", "$http", "$rootScope", "$location
 	$scope.ordenar = function (coluna) {
 		$scope.colunaOrdenar = coluna;
 		$scope.ascdescparameter();
-
 		$scope.listar();
-		console.log($scope.colunaOrdenar);
 	};
 
 	$scope.listar = function (ordenar, ascDesc) {
@@ -41,13 +39,12 @@ app.controller("ClienteController", ["$scope", "$http", "$rootScope", "$location
 		} else {
 			$http.get("/cliente/buscaPorNome?pesquisa=" + $scope.nomeCliente + "&ordenarPor=" + ordenar + "&ascDesc=" + ascDesc)
 			.success(function (data) {
-				$scope.listaDeComunidades = data;
+				$scope.listaDeClientes = data;
 			})
 			.error(function () {
 				toastr.error("Erro ao realizar a pesquisa.");
 			});
 		}
-		console.log($scope.listaDeClientes);
 	};
 
 	 $scope.selecionaItem = function(c){
