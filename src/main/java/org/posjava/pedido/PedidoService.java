@@ -30,7 +30,6 @@ public class PedidoService {
     }
 
     public void salvar(Pedido pedido) {
-        System.out.println(pedido);
         pedidoRepo.save(pedido);
     }
 
